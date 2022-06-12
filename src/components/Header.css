@@ -1,0 +1,49 @@
+.header {
+  width: 100%;
+  margin: 10px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-options {
+  width: 230px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.sign-in {
+  background-color: #fd2525;
+  border-radius: 4px;
+}
+
+h1 {
+  color: #fff049;
+  font-size: 3em;
+}
+
+a {
+  color: #ffffff;
+  padding: 10px 15px;
+}
+
+a:hover {
+  color: #ffebeb;
+}
+
+i {
+  padding-left: 5px;
+}
+
+@media screen and (max-width: 599px) {
+  h1 {
+    display: none;
+  }
+
+  .header {
+    justify-content: flex-end;
+  }
+}
