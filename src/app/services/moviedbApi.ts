@@ -1,5 +1,6 @@
 import { createApi, BaseQueryFn } from "@reduxjs/toolkit/query/react";
 import axios, { AxiosRequestConfig, AxiosError } from "axios";
+import Category from "../../common/types/Category";
 import { RootState } from "../store";
 
 const axiosBaseQuery =
@@ -39,8 +40,11 @@ export const moviedbApi = createApi({
     getGenres: builder.query({
       query: () => ({ url: "/genre/movie/list", method: "get" }),
     }),
-    getPopularMovies: builder.query({
-      query: () => ({ url: "/movie/popular", method: "get" }),
+    getMoviesByCategory: builder.query({
+      query: (category: Category) => ({
+        url: `/movie${category}`,
+        method: "get",
+      }),
     }),
     getSearchMovieResult: builder.query({
       query: (input) => ({
@@ -60,12 +64,16 @@ export const moviedbApi = createApi({
 
 export const selectGenreByIdList = (state: RootState) => (ids: number[]) => {
   const getGenres = state.api.queries["getGenres(null)"];
+  console.log("pokiman", getGenres);
   let genreList: string[] = [];
-  if (getGenres) {
+  if (getGenres && getGenres.status === "fulfilled") {
+    // if (getGenres) {
     const data = getGenres.data as {
       genres: { id: number; name: "string" }[];
       startedTimeStamp: number;
     };
+    console.log("rofl", getGenres);
+    console.log("xdddd", data);
     console.log("lul", data.genres);
     ids.forEach((id) => {
       const genre = data.genres.find((item) => item.id === id);
@@ -79,7 +87,7 @@ export const selectGenreByIdList = (state: RootState) => (ids: number[]) => {
 
 export const {
   useGetGenresQuery,
-  useGetPopularMoviesQuery,
+  useGetMoviesByCategoryQuery,
   useGetSearchMovieResultQuery,
   useGetMovieImageQuery,
 } = moviedbApi;

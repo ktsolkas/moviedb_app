@@ -7,9 +7,12 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import { store } from "./app/store";
 import App from "./app/App";
 import HomePage from "./screens/homepage/HomePage";
+import { CardList } from "./components/CardList";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
+
+const peon = ["popular", "top_rated", "upcoming", "now_playing"];
 
 root.render(
   <React.StrictMode>
@@ -18,6 +21,11 @@ root.render(
         <Routes>
           <Route element={<App />}>
             <Route path="/" element={<HomePage />}>
+              {peon.map((value) => {
+                return (
+                  <Route key={value} path={value} element={<CardList />} />
+                );
+              })}
               <Route path="search/:searchTerm" element={<></>} />
             </Route>
           </Route>

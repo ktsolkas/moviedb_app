@@ -18,10 +18,10 @@ const MovieCard: React.FC<MovieCardProps> = ({
   genre_ids,
 }) => {
   const peon = useGetMovieImageQuery(id);
-  console.log(peon);
+  console.log("halal", peon);
   console.log(id);
   return (
-    <div className="card-container">
+    <div className="movie-card">
       <img
         src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
         alt={`${title} movie poster`}

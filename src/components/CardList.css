@@ -1,0 +1,11 @@
+.card-list {
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 15px;
+}
+
+.spinner {
+  width: 256px;
+  margin: 50px auto;
+}
