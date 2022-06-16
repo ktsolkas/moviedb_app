@@ -1,11 +1,12 @@
-import { NavLink } from "react-router-dom";
 import "./CategoriesBar.css";
+import { NavLink } from "react-router-dom";
 
 const CategoriesBar: React.FC = () => {
-  let activeStyle = {
+  const activeStyle = {
     textDecoration: "underline",
-    backgroundColor: "darkred",
+    backgroundColor: "#8b0000",
   };
+
   return (
     <div className="options">
       <NavLink
@@ -18,21 +19,21 @@ const CategoriesBar: React.FC = () => {
       <NavLink
         className="option"
         to="/now_playing"
-        //   style={({ isActive }) => (isActive ? activeStyle : {})}
+        style={({ isActive }) => (isActive ? activeStyle : {})}
       >
         Now Playing
       </NavLink>
       <NavLink
         className="option"
         to="/top_rated"
-        //   style={({ isActive }) => (isActive ? activeStyle : {})}
+        style={({ isActive }) => (isActive ? activeStyle : {})}
       >
         Top Rated
       </NavLink>
       <NavLink
         className="option"
         to="/upcoming"
-        //   style={({ isActive }) => (isActive ? activeStyle : {})}
+        style={({ isActive }) => (isActive ? activeStyle : {})}
       >
         Upcoming
       </NavLink>

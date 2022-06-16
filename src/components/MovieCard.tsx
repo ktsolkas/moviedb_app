@@ -1,6 +1,7 @@
-import { useGetMovieImageQuery } from "../app/services/moviedbApi";
-import MovieCardDetails from "./MovieCardDetais";
 import "./MovieCard.css";
+
+import MovieCardDetails from "./MovieCardDetais";
+import Image from "./Image";
 
 interface MovieCardProps {
   title: string;
@@ -17,15 +18,16 @@ const MovieCard: React.FC<MovieCardProps> = ({
   id,
   genre_ids,
 }) => {
-  const peon = useGetMovieImageQuery(id);
-  console.log("halal", peon);
-  console.log(id);
   return (
-    <div className="movie-card">
-      <img
-        src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
-        alt={`${title} movie poster`}
-      />
+    <div className="movie-card" onClick={() => console.log(id)}>
+      <div className="image-container">
+        <Image
+          errorImg="https://image.shutterstock.com/image-vector/no-image-available-vector-illustration-260nw-744886198.jpg"
+          placeholderImg="https://via.placeholder.com/400x200.png?text=This+Will+Be+Shown+Before+Load"
+          src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
+          alt={`${title} movie poster`}
+        />
+      </div>
       <MovieCardDetails
         title={title}
         vote_average={vote_average}

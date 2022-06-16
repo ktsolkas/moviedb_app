@@ -9,3 +9,15 @@
   width: 256px;
   margin: 50px auto;
 }
+
+@media screen and (max-width: 899px) {
+  .card-list {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .card-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}

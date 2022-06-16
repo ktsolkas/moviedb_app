@@ -4,8 +4,7 @@ const searchSlice = createSlice({
   name: "search",
   initialState: "",
   reducers: {
-    updateSearchInput(state, action: PayloadAction<string>) {
-      console.log(action.payload + "asd");
+    updateSearchInput(_, action: PayloadAction<string>) {
       return action.payload;
     },
   },

@@ -10,8 +10,13 @@
   backface-visibility: hidden;
   /* transform: translateZ(0);
   transition: transform 0.25s ease-out; */
+  --width: calc(100% - 60px);
 }
 
 img {
   width: 100%;
+}
+
+.image-container {
+  height: var(--width);
 }

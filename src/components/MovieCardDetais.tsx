@@ -1,6 +1,7 @@
+import "./MovieCardDetails.css";
+
 import { useAppSelector } from "../app/hooks";
 import { selectGenreByIdList } from "../app/services/moviedbApi";
-import "./MovieCardDetails.css";
 
 interface MovieCardDetailsProps {
   title: string;
@@ -14,6 +15,7 @@ const MovieCardDetails: React.FC<MovieCardDetailsProps> = ({
   genre_ids,
 }) => {
   const genreList = useAppSelector(selectGenreByIdList)(genre_ids);
+
   return (
     <div className="details">
       <h3>{title}</h3>

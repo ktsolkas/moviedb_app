@@ -17,7 +17,7 @@ const axiosBaseQuery =
     unknown
   > =>
   async ({ url, method, data, params }) => {
-    params = { ...params, api_key: "5050df0b67b52bf426fac7f26ef4f205" };
+    params = { api_key: "5050df0b67b52bf426fac7f26ef4f205", ...params };
     try {
       const result = await axios({ url: baseUrl + url, method, data, params });
       return { data: result.data };
@@ -42,15 +42,15 @@ export const moviedbApi = createApi({
     }),
     getMoviesByCategory: builder.query({
       query: (category: Category) => ({
-        url: `/movie${category}`,
+        url: `/movie/${category}`,
         method: "get",
       }),
     }),
     getSearchMovieResult: builder.query({
-      query: (input) => ({
+      query: (input: string) => ({
         url: "/search/movie",
         method: "get",
-        params: { query: input },
+        params: { query: input.split("/")[2] },
       }),
     }),
     getMovieImage: builder.query({
@@ -64,26 +64,45 @@ export const moviedbApi = createApi({
 
 export const selectGenreByIdList = (state: RootState) => (ids: number[]) => {
   const getGenres = state.api.queries["getGenres(null)"];
-  console.log("pokiman", getGenres);
   let genreList: string[] = [];
+
   if (getGenres && getGenres.status === "fulfilled") {
-    // if (getGenres) {
     const data = getGenres.data as {
-      genres: { id: number; name: "string" }[];
-      startedTimeStamp: number;
+      genres: { id: number; name: string }[];
     };
-    console.log("rofl", getGenres);
-    console.log("xdddd", data);
-    console.log("lul", data.genres);
-    ids.forEach((id) => {
-      const genre = data.genres.find((item) => item.id === id);
+
+    genreList = ids.reduce((accumulator: string[], currentId: number) => {
+      const genre = data.genres.find((item) => item.id === currentId);
       if (genre) {
-        genreList.push(genre.name);
+        accumulator.push(genre.name);
       }
-    });
+      return accumulator;
+    }, []);
   }
+
   return genreList;
 };
+
+// export const selectGenreByIdList = (state: RootState, ids: number[]) => {
+//   const getGenres = state.api.queries["getGenres(null)"];
+//   let genreList: string[] = [];
+
+//   if (getGenres && getGenres.status === "fulfilled") {
+//     const data = getGenres.data as {
+//       genres: { id: number; name: string }[];
+//     };
+
+//     genreList = ids.reduce((accumulator: string[], currentId: number) => {
+//       const genre = data.genres.find((item) => item.id === currentId);
+//       if (genre) {
+//         accumulator.push(genre.name);
+//       }
+//       return accumulator;
+//     }, []);
+//   }
+
+//   return genreList;
+// };
 
 export const {
   useGetGenresQuery,
