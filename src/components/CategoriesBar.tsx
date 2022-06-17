@@ -1,7 +1,8 @@
 import "./CategoriesBar.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const CategoriesBar: React.FC = () => {
+  const { pathname } = useLocation();
   const activeStyle = {
     textDecoration: "underline",
     backgroundColor: "#8b0000",
@@ -12,7 +13,9 @@ const CategoriesBar: React.FC = () => {
       <NavLink
         className="option"
         to="/popular"
-        style={({ isActive }) => (isActive ? activeStyle : {})}
+        style={({ isActive }) =>
+          isActive || pathname === "/" ? activeStyle : {}
+        }
       >
         Popular
       </NavLink>

@@ -8,7 +8,7 @@ const App: React.FC = () => {
   useGetGenresQuery(null);
 
   return (
-    <div>
+    <div className="app-container">
       <Header />
       <Outlet />
     </div>

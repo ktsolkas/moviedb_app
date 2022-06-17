@@ -1,0 +1,16 @@
+.actor-card {
+  width: 150px;
+  text-align: center;
+  background-color: #d0d0e0;
+  height: 310px;
+  margin: 0 auto;
+}
+
+.actor-card img {
+  width: 100%;
+}
+
+.actor-card span {
+  display: inline-block;
+  margin-top: 10px;
+}

@@ -1,0 +1,19 @@
+.rating {
+  border: 2px solid #fd2525;
+  background-color: lightgray;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  right: 5px;
+  top: 0px;
+}
+
+.rating p {
+  font-weight: bold;
+  color: darkred;
+  text-align: center;
+  margin: auto;
+  width: 30px;
+  line-height: 30px;
+}

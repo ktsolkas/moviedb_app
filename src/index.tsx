@@ -7,10 +7,11 @@ import { Provider } from "react-redux";
 
 import { store } from "./app/store";
 import App from "./app/App";
-import HomePage from "./screens/homepage/HomePage";
+import HomePage from "./screens/home/HomePage";
 import { CardList } from "./components/CardList";
-import SearchForm from "./components/SearchForm";
 import { categories } from "./common/types/Category";
+import MoviePage from "./screens/movie/MoviePage";
+import SearchPage from "./screens/search/SearchPage";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -33,15 +34,8 @@ root.render(
                 );
               })}
             </Route>
-            <Route
-              path="search/:searchTerm"
-              element={
-                <>
-                  <SearchForm />
-                  <CardList />
-                </>
-              }
-            />
+            <Route path="search/:searchTerm" element={<SearchPage />} />
+            <Route path="movie/:movieId" element={<MoviePage />} />
           </Route>
         </Routes>
       </BrowserRouter>

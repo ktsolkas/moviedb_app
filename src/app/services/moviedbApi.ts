@@ -59,6 +59,18 @@ export const moviedbApi = createApi({
         method: "get",
       }),
     }),
+    getMovieById: builder.query({
+      query: (movie_id) => ({
+        url: `/movie/${movie_id}`,
+        method: "get",
+      }),
+    }),
+    getCredit: builder.query({
+      query: (movie_id) => ({
+        url: `/movie/${movie_id}/credits`,
+        method: "get",
+      }),
+    }),
   }),
 });
 
@@ -83,30 +95,11 @@ export const selectGenreByIdList = (state: RootState) => (ids: number[]) => {
   return genreList;
 };
 
-// export const selectGenreByIdList = (state: RootState, ids: number[]) => {
-//   const getGenres = state.api.queries["getGenres(null)"];
-//   let genreList: string[] = [];
-
-//   if (getGenres && getGenres.status === "fulfilled") {
-//     const data = getGenres.data as {
-//       genres: { id: number; name: string }[];
-//     };
-
-//     genreList = ids.reduce((accumulator: string[], currentId: number) => {
-//       const genre = data.genres.find((item) => item.id === currentId);
-//       if (genre) {
-//         accumulator.push(genre.name);
-//       }
-//       return accumulator;
-//     }, []);
-//   }
-
-//   return genreList;
-// };
-
 export const {
   useGetGenresQuery,
   useGetMoviesByCategoryQuery,
   useGetSearchMovieResultQuery,
   useGetMovieImageQuery,
+  useGetMovieByIdQuery,
+  useGetCreditQuery,
 } = moviedbApi;

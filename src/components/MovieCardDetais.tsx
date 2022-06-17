@@ -2,6 +2,7 @@ import "./MovieCardDetails.css";
 
 import { useAppSelector } from "../app/hooks";
 import { selectGenreByIdList } from "../app/services/moviedbApi";
+import Rating from "./Rating";
 
 interface MovieCardDetailsProps {
   title: string;
@@ -26,9 +27,10 @@ const MovieCardDetails: React.FC<MovieCardDetailsProps> = ({
           }`}</span>
         ))}
       </p>
-      <div className="rating">
+      {/* <div className="rating">
         <p>{vote_average}</p>
-      </div>
+      </div> */}
+      <Rating vote_average={vote_average} />
     </div>
   );
 };

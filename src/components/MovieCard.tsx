@@ -2,6 +2,7 @@ import "./MovieCard.css";
 
 import MovieCardDetails from "./MovieCardDetais";
 import Image from "./Image";
+import { useNavigate } from "react-router-dom";
 
 interface MovieCardProps {
   title: string;
@@ -18,8 +19,14 @@ const MovieCard: React.FC<MovieCardProps> = ({
   id,
   genre_ids,
 }) => {
+  const navigate = useNavigate();
+
+  const onClick = () => {
+    navigate(`/movie/${id}`);
+  };
+
   return (
-    <div className="movie-card" onClick={() => console.log(id)}>
+    <div className="movie-card" onClick={onClick}>
       <div className="image-container">
         <Image
           errorImg="https://image.shutterstock.com/image-vector/no-image-available-vector-illustration-260nw-744886198.jpg"
