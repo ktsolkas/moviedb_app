@@ -2,7 +2,7 @@
   width: 150px;
   text-align: center;
   background-color: #d0d0e0;
-  height: 310px;
+  min-height: 310px;
   margin: 0 auto;
 }
 
@@ -11,6 +11,6 @@
 }
 
 .actor-card span {
-  display: inline-block;
+  display: block;
   margin-top: 10px;
 }

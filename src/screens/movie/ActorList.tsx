@@ -27,11 +27,25 @@ const ActorList: React.FC<ActorListProps> = ({ id }) => {
   console.log(visibleActors);
 
   return (
-    <div className="actor-list">
-      <h2>Actors</h2>
-      {visibleActors.map((actor) => (
-        <ActorCard key={actor.id} actor={actor} />
-      ))}
+    <div className="actor-list-container">
+      <div className="actor-list">
+        {visibleActors.map((actor) => (
+          <ActorCard key={actor.id} actor={actor} />
+        ))}
+      </div>
+      <button onClick={() => setShowAll(!showAll)}>
+        {showAll ? (
+          <>
+            <span>Show Less</span>
+            <i className="fa-solid fa-caret-up"></i>
+          </>
+        ) : (
+          <>
+            <span>Show More</span>
+            <i className="fa-solid fa-caret-down"></i>
+          </>
+        )}
+      </button>
     </div>
   );
 };

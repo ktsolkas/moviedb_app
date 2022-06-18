@@ -1,0 +1,45 @@
+.sign-in-form {
+  margin: 0 auto;
+  width: max(30%, 350px);
+  text-align: center;
+  background-color: #8b0000;
+  border-radius: 8px;
+  padding: 30px;
+}
+
+.sign-in-form label {
+  display: block;
+  font-size: 40px;
+  margin-top: 20px;
+}
+
+.sign-in-form input {
+  width: 89%;
+  height: 40px;
+  background-color: #8b0000;
+  border: unset;
+  border-bottom: 5px solid white;
+  font-size: 22px;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.sign-in-form button {
+  width: 45%;
+  margin: 50px auto 15px auto;
+  padding: 10px 15px;
+  background-color: white;
+  cursor: pointer;
+  border: 1px solid white;
+  color: #8b0000;
+  /* font-size: 18px; */
+  font-size: 16px;
+  font-weight: bold;
+  border: 1px solid black;
+}
+
+@media screen and (max-width: 1299px) {
+  .sign-in-form button {
+    font-size: 14px;
+  }
+}

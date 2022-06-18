@@ -15,7 +15,7 @@ const MovieCardDetails: React.FC<MovieCardDetailsProps> = ({
   vote_average,
   genre_ids,
 }) => {
-  const genreList = useAppSelector(selectGenreByIdList)(genre_ids);
+  const genreList = useAppSelector(selectGenreByIdList)(genre_ids).slice(0, 4);
 
   return (
     <div className="details">

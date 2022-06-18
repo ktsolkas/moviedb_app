@@ -13,3 +13,19 @@
   cursor: pointer;
   border: 1px solid white;
 }
+
+@media screen and (max-width: 399px) {
+  .options {
+    display: block;
+  }
+
+  .option {
+    /* padding: 5px 5px; */
+    padding: 10px 0px;
+    margin: 0 auto;
+    display: inline-block;
+    width: 24%;
+    text-align: center;
+    font-size: 10px;
+  }
+}

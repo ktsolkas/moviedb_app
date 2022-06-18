@@ -12,6 +12,7 @@ import { CardList } from "./components/CardList";
 import { categories } from "./common/types/Category";
 import MoviePage from "./screens/movie/MoviePage";
 import SearchPage from "./screens/search/SearchPage";
+import SignInPage from "./screens/signIn/SignInPage";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -36,6 +37,7 @@ root.render(
             </Route>
             <Route path="search/:searchTerm" element={<SearchPage />} />
             <Route path="movie/:movieId" element={<MoviePage />} />
+            <Route path="signin" element={<SignInPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

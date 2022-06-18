@@ -1,9 +1,5 @@
 import "./MovieDetails.css";
-import {
-  selectGenreByIdList,
-  useGetMovieByIdQuery,
-} from "../../app/services/moviedbApi";
-import { useAppSelector } from "../../app/hooks";
+import { useGetMovieByIdQuery } from "../../app/services/moviedbApi";
 import Rating from "../../components/Rating";
 import Image from "../../components/Image";
 import { runtimeConvert } from "../../common/utils/runtimeConvert";
@@ -69,7 +65,7 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ id }) => {
           {runtimeConvert(data.runtime)}
         </span>
         <span>
-          <i className="fa-solid fa-circle-dollar"></i> Budget:{" "}
+          <i className="fa-solid fa-money-bill-1-wave"></i> Budget:{" "}
           {format(data.budget)}
         </span>
         <span>

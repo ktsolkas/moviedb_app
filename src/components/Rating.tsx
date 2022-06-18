@@ -6,7 +6,7 @@ interface RatingProps {
 
 const Rating: React.FC<RatingProps> = ({ vote_average }) => (
   <div className="rating">
-    <p>{vote_average}</p>
+    <p>{vote_average.toPrecision(2)}</p>
   </div>
 );
 

@@ -71,6 +71,12 @@ export const moviedbApi = createApi({
         method: "get",
       }),
     }),
+    getSimilarMovies: builder.query({
+      query: (movie_id) => ({
+        url: `/movie/${movie_id}/similar`,
+        method: "get",
+      }),
+    }),
   }),
 });
 
@@ -102,4 +108,5 @@ export const {
   useGetMovieImageQuery,
   useGetMovieByIdQuery,
   useGetCreditQuery,
+  useGetSimilarMoviesQuery,
 } = moviedbApi;

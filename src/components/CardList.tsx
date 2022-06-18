@@ -7,6 +7,7 @@ import Movie from "../common/types/Movie";
 import MovieCard from "./MovieCard";
 import {
   useGetMoviesByCategoryQuery,
+  useGetSimilarMoviesQuery,
   useGetSearchMovieResultQuery,
 } from "../app/services/moviedbApi";
 import Category from "../common/types/Category";
@@ -15,13 +16,14 @@ import { updateSearchInput } from "../features/search/searchSlice";
 
 interface CardListProps {
   category?: Category;
+  id?: number;
 }
 
 interface LocationState {
   fromHeader?: boolean;
 }
 
-export const CardList: React.FC<CardListProps> = ({ category }) => {
+export const CardList: React.FC<CardListProps> = ({ category, id }) => {
   const location = useLocation();
   const dispatch = useAppDispatch();
 
@@ -31,8 +33,11 @@ export const CardList: React.FC<CardListProps> = ({ category }) => {
   let movies;
   const moviesByCategory = useGetMoviesByCategoryQuery;
   const moviesBySearch = useGetSearchMovieResultQuery;
+  const moviesRecommended = useGetSimilarMoviesQuery;
   if (category) {
     movies = moviesByCategory(category);
+  } else if (id) {
+    movies = moviesRecommended(id);
   } else {
     movies = moviesBySearch(pathname);
   }
@@ -53,6 +58,7 @@ export const CardList: React.FC<CardListProps> = ({ category }) => {
       </div>
     );
   }
+  console.log(movies, id);
 
   return (
     <div className="card-list">
