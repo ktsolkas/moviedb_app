@@ -1,6 +1,11 @@
 body {
   margin: 0 auto;
   width: 100%;
-  background-color: black;
+  /* background-color: black; */
+  background-image: url(../src/assets/images/film-strip-background-with-clapper-board_1017-33456.jpg);
+  /* background-image: url(../src/assets/images/composition-cinema-elements-red-background-with-copy-space_23-2148457845.webp); */
+  background-attachment: fixed;
+  background-size: cover;
   color: white;
+  font-family: sans-serif;
 }

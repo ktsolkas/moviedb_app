@@ -1,7 +1,7 @@
 import "./MovieCardDetails.css";
 
 import { useAppSelector } from "../app/hooks";
-import { selectGenreByIdList } from "../app/services/moviedbApi";
+import { selectGenreByIdList } from "../app/services/api";
 import Rating from "./Rating";
 
 interface MovieCardDetailsProps {

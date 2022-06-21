@@ -21,7 +21,7 @@ const SearchForm: React.FC = () => {
     if (inputReference.current) {
       inputReference.current.focus();
     }
-  });
+  }, []);
 
   useEffect(() => {
     if (debouncedinput && !location.pathname.endsWith(debouncedinput)) {
@@ -31,7 +31,7 @@ const SearchForm: React.FC = () => {
       dispatch(updateSearchInput(""));
       navigate("/popular");
     }
-  });
+  }, [debouncedinput, dispatch, location.pathname, navigate]);
 
   return (
     <div className="movie-search">

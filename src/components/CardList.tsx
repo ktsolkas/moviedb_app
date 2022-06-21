@@ -9,7 +9,7 @@ import {
   useGetMoviesByCategoryQuery,
   useGetSimilarMoviesQuery,
   useGetSearchMovieResultQuery,
-} from "../app/services/moviedbApi";
+} from "../app/services/api";
 import Category from "../common/types/Category";
 import { useAppDispatch } from "../app/hooks";
 import { updateSearchInput } from "../features/search/searchSlice";
@@ -42,12 +42,13 @@ export const CardList: React.FC<CardListProps> = ({ category, id }) => {
     movies = moviesBySearch(pathname);
   }
   const { data, isError, isFetching } = movies;
+  // console.log("asdasd", data);
 
   useEffect(() => {
     if (locationState && locationState.fromHeader) {
       dispatch(updateSearchInput(""));
     }
-  });
+  }, [dispatch, locationState]);
 
   if (isError) return <div>An error has occurred!</div>;
 
@@ -58,7 +59,6 @@ export const CardList: React.FC<CardListProps> = ({ category, id }) => {
       </div>
     );
   }
-  console.log(movies, id);
 
   return (
     <div className="card-list">

@@ -17,7 +17,9 @@ const axiosBaseQuery =
     unknown
   > =>
   async ({ url, method, data, params }) => {
-    params = { api_key: "5050df0b67b52bf426fac7f26ef4f205", ...params };
+    if (baseUrl === "https://api.themoviedb.org/3") {
+      params = { api_key: "5050df0b67b52bf426fac7f26ef4f205", ...params };
+    }
     try {
       const result = await axios({ url: baseUrl + url, method, data, params });
       return { data: result.data };
@@ -33,6 +35,7 @@ const axiosBaseQuery =
   };
 
 export const moviedbApi = createApi({
+  reducerPath: "moviedbApi",
   baseQuery: axiosBaseQuery({
     baseUrl: "https://api.themoviedb.org/3",
   }),
@@ -80,8 +83,46 @@ export const moviedbApi = createApi({
   }),
 });
 
+export const api = createApi({
+  reducerPath: "api",
+  baseQuery: axiosBaseQuery({
+    baseUrl: "http://localhost:5000",
+  }),
+  tagTypes: ["Task"],
+  endpoints: (builder) => ({
+    signIn: builder.mutation({
+      query: (formData) => ({
+        url: "/user/signin",
+        method: "post",
+        data: formData,
+      }),
+    }),
+    signUp: builder.mutation({
+      query: (formData) => ({
+        url: "/user/signup",
+        method: "post",
+        data: formData,
+      }),
+    }),
+    getWatchlist: builder.query({
+      query: () => ({
+        url: "/watchlist",
+        method: "get",
+      }),
+    }),
+    createWatchlist: builder.mutation({
+      query: (watchlist) => ({
+        url: "/watchlist",
+        method: "post",
+        data: watchlist,
+      }),
+      invalidatesTags: ["Task"],
+    }),
+  }),
+});
+
 export const selectGenreByIdList = (state: RootState) => (ids: number[]) => {
-  const getGenres = state.api.queries["getGenres(null)"];
+  const getGenres = state.moviedbApi.queries["getGenres(null)"];
   let genreList: string[] = [];
 
   if (getGenres && getGenres.status === "fulfilled") {
@@ -110,3 +151,10 @@ export const {
   useGetCreditQuery,
   useGetSimilarMoviesQuery,
 } = moviedbApi;
+
+export const {
+  useGetWatchlistQuery,
+  useCreateWatchlistMutation,
+  useSignInMutation,
+  useSignUpMutation,
+} = api;

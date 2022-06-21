@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useGetCreditQuery } from "../../app/services/moviedbApi";
+import { useGetCreditQuery } from "../../app/services/api";
 import Actor from "../../common/types/Actor";
 import ActorCard from "./ActorCard";
 import "./ActorList.css";
@@ -24,7 +24,6 @@ const ActorList: React.FC<ActorListProps> = ({ id }) => {
   } else {
     visibleActors = data.cast.slice(0, 6);
   }
-  console.log(visibleActors);
 
   return (
     <div className="actor-list-container">
@@ -33,7 +32,7 @@ const ActorList: React.FC<ActorListProps> = ({ id }) => {
           <ActorCard key={actor.id} actor={actor} />
         ))}
       </div>
-      <button onClick={() => setShowAll(!showAll)}>
+      <button onClick={() => setShowAll((prev) => !prev)}>
         {showAll ? (
           <>
             <span>Show Less</span>

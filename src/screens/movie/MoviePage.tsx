@@ -1,6 +1,6 @@
 import "./MoviePage.css";
 
-import { useGetMovieImageQuery } from "../../app/services/moviedbApi";
+import { useGetMovieImageQuery } from "../../app/services/api";
 import { useLocation } from "react-router-dom";
 import MovieDetails from "./MovieDetails";
 import ActorList from "./ActorList";
@@ -40,10 +40,9 @@ const MoviePage: React.FC = () => {
           <ImageGallery items={images} autoPlay={true} showPlayButton={false} />
         </div>
         <hr />
-        <div className='similar'>
-
-        <h2>Similar</h2>
-        <CardList id={+id} />
+        <div className="similar">
+          <h2>Similar</h2>
+          <CardList id={+id} />
         </div>
       </div>
     </>

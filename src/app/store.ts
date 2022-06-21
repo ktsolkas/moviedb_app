@@ -1,19 +1,22 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 
-import { moviedbApi } from "./services/moviedbApi";
+import { api, moviedbApi } from "./services/api";
 import searchReducer from "../features/search/searchSlice";
+import authReducer from "../features/auth/authSlice";
 
 export const store = configureStore({
   reducer: {
     [moviedbApi.reducerPath]: moviedbApi.reducer,
+    [api.reducerPath]: api.reducer,
     search: searchReducer,
+    auth: authReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(moviedbApi.middleware),
+    getDefaultMiddleware().concat(moviedbApi.middleware).concat(api.middleware),
   devTools: {
     stateSanitizer: (state: any) => {
-      const { api, ...rest } = state;
-      const { queries, ...restApi } = api;
+      const { moviedbApi, ...rest } = state;
+      const { queries, ...restApi } = moviedbApi;
       const filteredQueries = Object.keys(queries)
         .filter((value) => !value.startsWith("getMovieImage"))
         .reduce((accumulator, currentKey) => {
@@ -22,7 +25,10 @@ export const store = configureStore({
           });
         }, {});
 
-      return { api: { queries: { ...filteredQueries }, ...restApi }, ...rest };
+      return {
+        moviedbApi: { queries: { ...filteredQueries }, ...restApi },
+        ...rest,
+      };
     },
   },
 });

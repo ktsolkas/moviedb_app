@@ -1,41 +1,71 @@
 .sign-in-form {
   margin: 0 auto;
-  width: max(30%, 350px);
+  width: max(25%, 350px);
   text-align: center;
-  background-color: #8b0000;
+  background-color: white;
   border-radius: 8px;
-  padding: 30px;
+  padding: 20px;
 }
 
 .sign-in-form label {
   display: block;
   font-size: 40px;
   margin-top: 20px;
+  text-align: left;
+  color: black;
 }
 
 .sign-in-form input {
-  width: 89%;
+  width: 90%;
   height: 40px;
-  background-color: #8b0000;
+  background-color: white;
   border: unset;
-  border-bottom: 5px solid white;
+  border-bottom: 5px solid black;
   font-size: 22px;
-  color: white;
   margin-bottom: 20px;
 }
 
 .sign-in-form button {
-  width: 45%;
-  margin: 50px auto 15px auto;
+  width: 92%;
+  margin: 30px auto 15px auto;
   padding: 10px 15px;
   background-color: white;
   cursor: pointer;
-  border: 1px solid white;
-  color: #8b0000;
+  color: white;
   /* font-size: 18px; */
   font-size: 16px;
   font-weight: bold;
   border: 1px solid black;
+  background-color: #fd2525;
+}
+
+.sign-in-form input:focus {
+  outline: unset;
+}
+
+.sign-in-form i {
+  font-size: 30px;
+  border: 1px solid white;
+  border-radius: 50%;
+  padding: 10px;
+  background-color: #fd2525;
+}
+
+.sign-in-form h5 {
+  font-size: 40px;
+  margin: 10px 0 40px 0;
+  color: black;
+}
+
+form .btn-switch {
+  background-color: white;
+  border: unset;
+  font-weight: unset;
+  color: black;
+  width: auto;
+  display: flex;
+  margin: 0;
+  margin-left: auto;
 }
 
 @media screen and (max-width: 1299px) {

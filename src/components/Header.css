@@ -13,7 +13,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .sign-in {
@@ -27,17 +27,41 @@ h1 {
   font-size: 3em;
 }
 
-a {
+.nav-options a,
+.nav-options button {
   color: #ffffff;
   padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
-a:hover {
+.nav-options a:hover,
+.nav-options button:hover {
   color: #ffebeb;
 }
 
 i {
   padding-left: 5px;
+}
+.user-info {
+  width: 80%;
+  margin: 10px auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: -40px;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 5px;
+  /* vertical-align: middle; */
+  /* display: flex;
+  justify-self: end; */
 }
 
 @media screen and (max-width: 599px) {

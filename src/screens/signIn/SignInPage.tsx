@@ -1,28 +1,173 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "./SignInPage.css";
+import Input from "./Input";
+import { GoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
+import { useAppDispatch } from "../../app/hooks";
+// import { auth, signin, signup } from "../../features/auth/authSlice";
+import { auth } from "../../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
+import { useSignInMutation, useSignUpMutation } from "../../app/services/api";
+// import { gapi } from "gapi-script";
+
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 const SignInPage: React.FC = () => {
   const [loginMode, setLoginMode] = useState(true);
-  const inputReference = useRef<HTMLInputElement>(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState(initialState);
+  const signIn = useSignInMutation();
+  const signUp = useSignUpMutation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  useLayoutEffect(() => {
-    if (inputReference.current) {
-      inputReference.current.focus();
-    }
+  const login = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      const token = tokenResponse?.access_token;
+      // console.log("asd", tokenResponse);
+      // console.log("ala", token);
+      const res = await fetch(
+        "https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + token
+      );
+      const profileData = await res.json();
+      console.log(profileData);
+      try {
+        dispatch(auth({ profileData, token }));
+        navigate("/");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    onError: (error) => console.log("Google log in was unsuccessful. ", error),
   });
+
+  const handleShowPassword = () => setShowPassword((prev) => !prev);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // console.log(formData);
+
+    if (loginMode) {
+      // dispatch(signin({ formData, navigate }));
+      const [attempt, result] = signIn;
+      attempt({ ...formData });
+      // await attempt({ formData, navigate });
+      console.log("holee", result);
+    } else {
+      // dispatch(signup({ formData, navigate }));
+      const [attempt, result] = signUp;
+      try {
+        const res = await attempt({ ...formData }).unwrap();
+        // await attempt({ formData, navigate });
+        console.log("RESULT", res);
+        console.log("sheeeit", result);
+        navigate("/");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const switchMode = () => {
+    setLoginMode((prev) => !prev);
+    setShowPassword(false);
+  };
+
+  // const responseGoogle = (response: any) => {
+  //   console.log(response);
+  // };
+
+  // const googleSuccess = (response: any) => {
+  //   console.log(response);
+  // };
+
+  // const googleFailure = (error: any) => {
+  //   console.log("Failure", error.details);
+  // };
+
+  // useEffect(() => {
+  //   function start() {
+  //     gapi.client.init({
+  //       clientId:
+  //         "79054974389-d331kq17ikhppgu7777st4lsqnis1ksr.apps.googleusercontent.com",
+  //       scope: "email",
+  //     });
+  //   }
+
+  //   gapi.load("client:auth2", start);
+  // }, []);
+
   return (
-    <div className="sign-in-form">
-      <form>
-        <label htmlFor="email">Email </label>
-        <input ref={inputReference} type="email" name="email" required />
-        <label htmlFor="password">Password </label>
-        <input type="password" name="password" required />
+    <main className="sign-in-form">
+      <i className="fa-solid fa-key"></i>
+      <h5>{!loginMode ? "Sign Up" : "Sign In"}</h5>
+      <form onSubmit={handleSubmit}>
+        {!loginMode && (
+          <>
+            <Input
+              name="firstName"
+              label="First Name"
+              handleChange={handleChange}
+              autoFocus={true}
+            />
+            <Input
+              name="lastName"
+              label="Last Name"
+              handleChange={handleChange}
+            />
+          </>
+        )}
+        <Input
+          name="email"
+          label="Email"
+          handleChange={handleChange}
+          type="email"
+          autoFocus={loginMode}
+        />
+        <Input
+          name="password"
+          label="Password"
+          handleChange={handleChange}
+          type={showPassword ? "text" : "password"}
+          handleShowPassword={handleShowPassword}
+        />
+        {!loginMode && (
+          <Input
+            name="confirmPassword"
+            label="Confirm Password"
+            handleChange={handleChange}
+            type="password"
+          />
+        )}
+        <button type="submit">{!loginMode ? "Sign Up" : "Sign In"}</button>
+        <button type="button" onClick={() => login()}>
+          Sign in with Google
+        </button>
+        {/* <GoogleLogin
+          clientId="79054974389-d331kq17ikhppgu7777st4lsqnis1ksr.apps.googleusercontent.com"
+          buttonText="Google Sign In"
+          onSuccess={googleSuccess}
+          onFailure={googleFailure}
+          cookiePolicy={"single_host_origin"}
+          // uxMode="redirect"
+        /> */}
+        <button className="btn-switch" type="button" onClick={switchMode}>
+          {!loginMode
+            ? "Already have an account? Sign In"
+            : "Don't have an account? Sign Up"}
+        </button>
       </form>
-      <button type="submit">{loginMode ? "Login" : "Sign Up"}</button>
-      <button type="button" onClick={() => setLoginMode(!loginMode)}>
-        Switch to {loginMode ? "Sign Up" : "Login"}
-      </button>
-    </div>
+    </main>
   );
 };
 

@@ -1,5 +1,5 @@
 import "./MovieDetails.css";
-import { useGetMovieByIdQuery } from "../../app/services/moviedbApi";
+import { useGetMovieByIdQuery } from "../../app/services/api";
 import Rating from "../../components/Rating";
 import Image from "../../components/Image";
 import { runtimeConvert } from "../../common/utils/runtimeConvert";
@@ -12,7 +12,6 @@ interface MovieDetailsProps {
 
 const MovieDetails: React.FC<MovieDetailsProps> = ({ id }) => {
   const { data, isFetching } = useGetMovieByIdQuery(id);
-  console.log(data);
   if (isFetching) {
     return <p>LOADING</p>;
   }
