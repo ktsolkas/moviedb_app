@@ -12,9 +12,14 @@
   background-color: #fd2525;
   cursor: pointer;
   border: 1px solid white;
+  color: white;
 }
 
-@media screen and (max-width: 399px) {
+.option:hover {
+  background-color: #bc1212;
+}
+
+@media screen and (max-width: 499px) {
   .options {
     display: block;
   }

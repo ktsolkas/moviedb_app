@@ -13,7 +13,7 @@ const ActorList: React.FC<ActorListProps> = ({ id }) => {
   const { data, isError, isFetching } = useGetCreditQuery(id);
   let visibleActors: Actor[] = [];
   if (isFetching) {
-    return <p>FFS</p>;
+    return <></>;
   }
   if (isError) {
     return <p>Error</p>;

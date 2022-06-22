@@ -55,18 +55,23 @@ const SignInPage: React.FC = () => {
 
     if (loginMode) {
       // dispatch(signin({ formData, navigate }));
-      const [attempt, result] = signIn;
-      attempt({ ...formData });
-      // await attempt({ formData, navigate });
-      console.log("holee", result);
+      const [attempt] = signIn;
+      try {
+        const res = await attempt({ ...formData }).unwrap();
+        console.log("RESULT", res);
+        dispatch(auth({ profileData: res.result, token: res.token }));
+        navigate("/");
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       // dispatch(signup({ formData, navigate }));
-      const [attempt, result] = signUp;
+      const [attempt] = signUp;
       try {
         const res = await attempt({ ...formData }).unwrap();
         // await attempt({ formData, navigate });
         console.log("RESULT", res);
-        console.log("sheeeit", result);
+        dispatch(auth({ profileData: res.result, token: res.token }));
         navigate("/");
       } catch (error) {
         console.log(error);
@@ -83,6 +88,9 @@ const SignInPage: React.FC = () => {
     setShowPassword(false);
   };
 
+  const switchPasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
   // const responseGoogle = (response: any) => {
   //   console.log(response);
   // };
@@ -141,6 +149,14 @@ const SignInPage: React.FC = () => {
           type={showPassword ? "text" : "password"}
           handleShowPassword={handleShowPassword}
         />
+        {formData.password && (
+          <i
+            onClick={switchPasswordVisibility}
+            className={`fa-solid ${
+              showPassword ? "fa-eye-slash" : "fa-eye"
+            } eye-icon`}
+          ></i>
+        )}
         {!loginMode && (
           <Input
             name="confirmPassword"
@@ -150,7 +166,7 @@ const SignInPage: React.FC = () => {
           />
         )}
         <button type="submit">{!loginMode ? "Sign Up" : "Sign In"}</button>
-        <button type="button" onClick={() => login()}>
+        <button className="btn-google" type="button" onClick={() => login()}>
           Sign in with Google
         </button>
         {/* <GoogleLogin

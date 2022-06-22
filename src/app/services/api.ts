@@ -12,17 +12,46 @@ const axiosBaseQuery =
       method: AxiosRequestConfig["method"];
       data?: AxiosRequestConfig["data"];
       params?: AxiosRequestConfig["params"];
+      headers?: AxiosRequestConfig["headers"];
     },
     unknown,
     unknown
   > =>
   async ({ url, method, data, params }) => {
     if (baseUrl === "https://api.themoviedb.org/3") {
-      params = { api_key: "5050df0b67b52bf426fac7f26ef4f205", ...params };
+      // params = { api_key: "5050df0b67b52bf426fac7f26ef4f205", ...params };
+    } else {
+      // headers;
     }
     try {
-      const result = await axios({ url: baseUrl + url, method, data, params });
-      return { data: result.data };
+      if (baseUrl === "https://api.themoviedb.org/3") {
+        const result = await axios({
+          url: baseUrl + url,
+          method,
+          data,
+          params,
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MDUwZGYwYjY3YjUyYmY0MjZmYWM3ZjI2ZWY0ZjIwNSIsInN1YiI6IjYyYTVlM2QyNTM4NjZlMGRlMGYzYTMyMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.mmr3TYlySq6LTS3OFrE0UFTxPZECpGRIwWhIpWTF9fA",
+          },
+        });
+        return { data: result.data };
+      } else {
+        const result = await axios({
+          url: baseUrl + url,
+          method,
+          data,
+          params,
+          headers: {
+            Authorization: `Bearer ${
+              localStorage.getItem("profile")
+                ? JSON.parse(localStorage.getItem("profile")!).token
+                : ""
+            }`,
+          },
+        });
+        return { data: result.data };
+      }
     } catch (axiosError) {
       let err = axiosError as AxiosError;
       return {
@@ -88,7 +117,6 @@ export const api = createApi({
   baseQuery: axiosBaseQuery({
     baseUrl: "http://localhost:5000",
   }),
-  tagTypes: ["Task"],
   endpoints: (builder) => ({
     signIn: builder.mutation({
       query: (formData) => ({
@@ -116,7 +144,6 @@ export const api = createApi({
         method: "post",
         data: watchlist,
       }),
-      invalidatesTags: ["Task"],
     }),
   }),
 });

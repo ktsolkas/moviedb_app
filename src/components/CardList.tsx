@@ -42,7 +42,7 @@ export const CardList: React.FC<CardListProps> = ({ category, id }) => {
     movies = moviesBySearch(pathname);
   }
   const { data, isError, isFetching } = movies;
-  // console.log("asdasd", data);
+  console.log("ena", data);
 
   useEffect(() => {
     if (locationState && locationState.fromHeader) {
@@ -58,6 +58,10 @@ export const CardList: React.FC<CardListProps> = ({ category, id }) => {
         <DualRing size={256} color="#fd2525" />
       </div>
     );
+  }
+
+  if (data.results.length === 0) {
+    return <p>Could not find movies that match the search term.</p>;
   }
 
   return (

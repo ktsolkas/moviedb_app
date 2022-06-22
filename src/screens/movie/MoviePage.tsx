@@ -8,13 +8,18 @@ import ActorList from "./ActorList";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { CardList } from "../../components/CardList";
+import { DualRing } from "react-awesome-spinners";
 
 const MoviePage: React.FC = () => {
   const { pathname } = useLocation();
   const id = pathname.slice(7);
   const { data, isFetching } = useGetMovieImageQuery(id);
   if (isFetching) {
-    return <p>LOADING</p>;
+    return (
+      <div className="spinner">
+        <DualRing size={256} color="#fd2525" />
+      </div>
+    );
   }
   const images = data.backdrops.map((item: any) => ({
     original: `https://image.tmdb.org/t/p/w1280${item.file_path}`,

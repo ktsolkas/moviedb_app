@@ -1,8 +1,9 @@
 import "./Header.css";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../app/hooks";
 import { logout } from "../features/auth/authSlice";
+import jwt_decode from "jwt-decode";
 
 const Header: React.FC = () => {
   const [user, setUser] = useState(
@@ -20,9 +21,17 @@ const Header: React.FC = () => {
   };
 
   useEffect(() => {
-    // const token = user?.token;
+    const token = user?.token;
 
-    //JWT
+    // if (token) {
+    //   console.log(token);
+    //   const decodedToken: any = jwt_decode(token);
+    //   console.log("asdasdasd", decodedToken);
+    //   if (decodedToken.exp * 1000 < new Date().getTime()) {
+    //     onLogout();
+    //   }
+    // }
+    // //JWT
 
     setUser(JSON.parse(localStorage.getItem("profile")!));
   }, [location]);
@@ -30,10 +39,12 @@ const Header: React.FC = () => {
   return (
     <>
       <div className="header">
-        <h1>
-          movieDB
-          <i className="fa-solid fa-film"></i>
-        </h1>
+        <div className="header-app-title">
+          <Link state={{ fromHeader: true }} to="/">
+            movieDB
+            <i className="fa-solid fa-film"></i>
+          </Link>
+        </div>
         <div className="nav-options">
           <NavLink state={{ fromHeader: true }} to="/">
             MOVIES

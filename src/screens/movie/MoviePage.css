@@ -24,11 +24,12 @@
 }
 
 .image-gallery {
-  width: max(80%, 375px);
+  width: max(80%, 310px);
   margin: 0 auto;
 }
 
 .similar {
   width: 80%;
   margin: 0 auto;
+  padding-bottom: 50px;
 }

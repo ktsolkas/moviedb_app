@@ -1,6 +1,6 @@
 .rating {
-  border: 2px solid #fd2525;
-  background-color: lightgray;
+  border: 2px solid #003300;
+  background-color: #ddeeff;
   border-radius: 50%;
   height: 30px;
   width: 30px;
@@ -11,9 +11,23 @@
 
 .rating p {
   font-weight: bold;
-  color: darkred;
+  color: #003300;
   text-align: center;
   margin: auto;
   width: 30px;
   line-height: 30px;
+}
+
+@media screen and (max-width: 899px) {
+  .rating {
+    height: 20px;
+    width: 20px;
+    right: 0px;
+  }
+
+  .rating p {
+    width: 20px;
+    line-height: 20px;
+    font-size: 11px;
+  }
 }

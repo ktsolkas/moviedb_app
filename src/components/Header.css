@@ -22,9 +22,10 @@
   border: 1px solid white;
 }
 
-h1 {
+.header-app-title a {
   color: #fff049;
   font-size: 3em;
+  cursor: pointer;
 }
 
 .nav-options a,
@@ -35,9 +36,9 @@ h1 {
   font-size: 16px;
 }
 
-.nav-options a:hover,
+.nav-options .sign-in:hover,
 .nav-options button:hover {
-  color: #ffebeb;
+  background-color: #bc1212;
 }
 
 i {
@@ -65,11 +66,11 @@ i {
 }
 
 @media screen and (max-width: 599px) {
-  h1 {
+  .header-app-title {
     display: none;
   }
 
   .header {
-    justify-content: flex-end;
+    justify-content: center;
   }
 }

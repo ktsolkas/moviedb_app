@@ -5,6 +5,7 @@
   background-color: white;
   border-radius: 8px;
   padding: 20px;
+  margin-bottom: 50px;
 }
 
 .sign-in-form label {
@@ -29,7 +30,6 @@
   width: 92%;
   margin: 30px auto 15px auto;
   padding: 10px 15px;
-  background-color: white;
   cursor: pointer;
   color: white;
   /* font-size: 18px; */
@@ -66,6 +66,26 @@ form .btn-switch {
   display: flex;
   margin: 0;
   margin-left: auto;
+}
+
+form {
+  position: relative;
+}
+
+.sign-in-form .btn-google {
+  background-color: #4285f4;
+  margin-top: 0px;
+}
+
+form .eye-icon {
+  position: absolute;
+  right: 5px;
+  font-size: 20px;
+  padding: 10px;
+  border: unset;
+  background-color: unset;
+  color: black;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1299px) {

@@ -6,7 +6,7 @@
 
 .details p {
   position: absolute;
-  margin: 5px;
+  margin: 0 5px;
   bottom: 0;
 }
 
@@ -14,4 +14,18 @@
   margin: 0px 0px 0px 5px;
   font-size: 14px;
   width: calc(100% - 40px);
+}
+
+@media screen and (max-width: 499px) {
+  .details h3 {
+    font-size: 12px;
+  }
+
+  .details span {
+    font-size: 10px;
+  }
+
+  .details h3 {
+    width: calc(100% - 28px);
+  }
 }

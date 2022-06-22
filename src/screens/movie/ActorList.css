@@ -58,7 +58,7 @@
   }
 }
 
-@media screen and (max-width: 399px) {
+@media screen and (max-width: 499px) {
   .actor-list {
     grid-template-columns: 1fr 1fr;
   }

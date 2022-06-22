@@ -13,7 +13,7 @@ interface MovieDetailsProps {
 const MovieDetails: React.FC<MovieDetailsProps> = ({ id }) => {
   const { data, isFetching } = useGetMovieByIdQuery(id);
   if (isFetching) {
-    return <p>LOADING</p>;
+    return <></>;
   }
   return (
     <>
@@ -26,31 +26,24 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ id }) => {
         />
         <div className="movie-details">
           <h2>{data.title}</h2>
-          <p>{data.tagline}</p>
+          <hr />
+          <p className="tagline">{data.tagline}</p>
           <h3>Plot</h3>
-          <p>{data.overview}</p>
-          <h3>Genres</h3>
-          <p>
-            {data.genres.map(
-              (genre: { id: number; name: string }, index: number) => (
-                <React.Fragment key={genre.id}>
-                  <span className="genre">{genre.name}</span>
-                  <span> </span>
-                  {/* <span>{index < data.genres.length - 1 ? ", " : ""}</span> */}
-                </React.Fragment>
-              )
-            )}
-          </p>
-          <h3>Status</h3>
-          <p>{data.status}</p>
-          <h3>Produced By</h3>
-          {data.production_companies.map(
-            (value: { id: number; name: string }, index: number) => (
-              <span key={value.id}>{`${value.name}${
-                index < data.genres.length - 1 ? ", " : ""
-              }`}</span>
-            )
-          )}
+          <p className="overview">{data.overview}</p>
+          <div className="genres-container">
+            <h3>Genres</h3>
+            <p>
+              {data.genres.map(
+                (genre: { id: number; name: string }, index: number) => (
+                  <React.Fragment key={genre.id}>
+                    <span className="genre">{genre.name}</span>
+                    <span> </span>
+                    {/* <span>{index < data.genres.length - 1 ? ", " : ""}</span> */}
+                  </React.Fragment>
+                )
+              )}
+            </p>
+          </div>
           <Rating vote_average={data.vote_average} />
         </div>
       </div>

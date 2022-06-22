@@ -1,5 +1,6 @@
 .movie-search {
   position: relative;
+  margin-bottom: 20px;
 }
 
 .movie-search input {
@@ -8,7 +9,6 @@
   border-width: 4px;
   height: 41px;
   width: max(30%, 200px);
-  border-radius: 0px;
   transition: all 0.5s ease;
   padding-left: 50px;
   display: block;
@@ -17,8 +17,6 @@
 
 .movie-search input:focus {
   border-radius: 10px;
-  width: max(50%, 250px);
-  outline: none;
   border-color: #fff049;
 }
 
@@ -27,4 +25,10 @@
   left: 10px;
   top: 22px;
   color: lightgray;
+}
+
+@media screen and (max-width: 599px) {
+  .movie-search input {
+    width: calc(100% - 54px);
+  }
 }
