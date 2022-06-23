@@ -61,7 +61,11 @@ export const CardList: React.FC<CardListProps> = ({ category, id }) => {
   }
 
   if (data.results.length === 0) {
-    return <p>Could not find movies that match the search term.</p>;
+    return (
+      <p style={{ color: "white" }}>
+        Could not find movies that match the search term.
+      </p>
+    );
   }
 
   return (

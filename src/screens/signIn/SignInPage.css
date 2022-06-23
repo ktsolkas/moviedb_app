@@ -1,6 +1,6 @@
 .sign-in-form {
   margin: 0 auto;
-  width: max(25%, 350px);
+  width: max(25%, 330px);
   text-align: center;
   background-color: white;
   border-radius: 8px;
@@ -49,6 +49,7 @@
   border-radius: 50%;
   padding: 10px;
   background-color: #fd2525;
+  color: white;
 }
 
 .sign-in-form h5 {

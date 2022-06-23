@@ -46,11 +46,12 @@ i {
 }
 .user-info {
   width: 80%;
-  margin: 10px auto;
+  margin: -50px auto 10px auto;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top: -40px;
+  padding: 10px;
+  color: white;
 }
 
 .avatar {

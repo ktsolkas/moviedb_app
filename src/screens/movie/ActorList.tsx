@@ -32,19 +32,23 @@ const ActorList: React.FC<ActorListProps> = ({ id }) => {
           <ActorCard key={actor.id} actor={actor} />
         ))}
       </div>
-      <button onClick={() => setShowAll((prev) => !prev)}>
-        {showAll ? (
-          <>
-            <span>Show Less</span>
-            <i className="fa-solid fa-caret-up"></i>
-          </>
-        ) : (
-          <>
-            <span>Show More</span>
-            <i className="fa-solid fa-caret-down"></i>
-          </>
-        )}
-      </button>
+      {data.cast.length > 6 && (
+        <>
+          <button onClick={() => setShowAll((prev) => !prev)}>
+            {showAll ? (
+              <>
+                <span>Show Less</span>
+                <i className="fa-solid fa-caret-up"></i>
+              </>
+            ) : (
+              <>
+                <span>Show More</span>
+                <i className="fa-solid fa-caret-down"></i>
+              </>
+            )}
+          </button>
+        </>
+      )}
     </div>
   );
 };

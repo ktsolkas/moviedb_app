@@ -8,23 +8,48 @@ import React from "react";
 import { selectToken } from "../../features/auth/authSlice";
 import { useAppSelector } from "../../app/hooks";
 import { useLocation, useNavigate } from "react-router-dom";
+import Modal from "react-modal";
+import Input from "../signIn/Input";
 
 interface MovieDetailsProps {
   id: number;
 }
+
+Modal.setAppElement("#root");
 
 const MovieDetails: React.FC<MovieDetailsProps> = ({ id }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { data, isFetching } = useGetMovieByIdQuery(id);
   const userToken = useAppSelector(selectToken);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
 
-  const handleClick = () => {
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  // function afterOpenModal() {
+  //   // references are now sync'd and can be accessed.
+  //   subtitle.style.color = '#f00';
+  // }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!userToken) {
       navigate("/signIn", { state: { from: pathname } });
     } else {
       //placeholder
+      if (e.currentTarget.innerText === " REVIEW") {
+        openModal();
+      }
     }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
   };
 
   if (isFetching) {
@@ -90,6 +115,41 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ id }) => {
         <span>
           <i className="fa-solid fa-ticket"></i> Revenue: {format(data.revenue)}
         </span>
+      </div>
+      <div>
+        <Modal
+          isOpen={modalIsOpen}
+          // onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          // style={{ height: "auto" }}
+          contentLabel="Example Modal"
+        >
+          {/* <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2> */}
+          <div className="modal">
+            <button className="close-modal" onClick={closeModal}>
+              X
+            </button>
+            <form onSubmit={handleSubmit}>
+              <Input
+                name="title"
+                label="Review Title"
+                handleChange={() => console.log(3)}
+                autoFocus={true}
+              />
+              <label htmlFor="body">Review Body</label>
+              <textarea name="body" />
+              <label htmlFor="rating">Rating</label>
+              <select>
+                {Array.from(Array(11).keys()).map((value) => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                ))}
+              </select>
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+        </Modal>
       </div>
     </>
   );

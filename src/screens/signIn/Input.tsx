@@ -7,6 +7,7 @@ interface InputProps {
   type?: string;
   autoFocus?: boolean;
   handleShowPassword?: () => void;
+  placeholder?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -15,6 +16,7 @@ const Input: React.FC<InputProps> = ({
   handleChange,
   autoFocus,
   label,
+  placeholder,
 }) => {
   return (
     <>
@@ -25,6 +27,7 @@ const Input: React.FC<InputProps> = ({
         onChange={handleChange}
         required
         autoFocus={autoFocus}
+        placeholder={placeholder}
       />
     </>
   );
