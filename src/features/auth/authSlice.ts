@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
 
 interface Payload {
   profileData: ProfileData;
@@ -75,6 +76,8 @@ const authSlice = createSlice({
   //   });
   // },
 });
+
+export const selectToken = (state: RootState) => state.auth.authData.token;
 
 export const { auth, logout } = authSlice.actions;
 

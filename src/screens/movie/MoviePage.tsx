@@ -31,7 +31,9 @@ const MoviePage: React.FC = () => {
       <div
         className="movie-page-main"
         style={{
-          backgroundImage: `url(https://image.tmdb.org/t/p/w1280${data.backdrops[0].file_path})`,
+          backgroundImage:
+            data.backdrops[0] &&
+            `url(https://image.tmdb.org/t/p/w1280${data.backdrops[0].file_path})`,
         }}
       >
         <MovieDetails id={+id} />
@@ -40,11 +42,19 @@ const MoviePage: React.FC = () => {
         <h2>Actors</h2>
         <ActorList id={+id} />
         <hr />
-        <div className="image-gallery">
-          <h2>Photos</h2>
-          <ImageGallery items={images} autoPlay={true} showPlayButton={false} />
-        </div>
-        <hr />
+        {!!images.length && (
+          <>
+            <div className="image-gallery">
+              <h2>Photos</h2>
+              <ImageGallery
+                items={images}
+                autoPlay={true}
+                showPlayButton={false}
+              />
+            </div>
+            <hr />
+          </>
+        )}
         <div className="similar">
           <h2>Similar</h2>
           <CardList id={+id} />

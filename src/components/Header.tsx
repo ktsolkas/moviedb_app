@@ -2,17 +2,17 @@ import "./Header.css";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../app/hooks";
-import { logout } from "../features/auth/authSlice";
+import { auth, logout } from "../features/auth/authSlice";
 import jwt_decode from "jwt-decode";
 
 const Header: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("profile")!)
   );
   console.log("user", user);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
 
   const onLogout = () => {
     dispatch(logout());
@@ -33,6 +33,9 @@ const Header: React.FC = () => {
     // }
     // //JWT
 
+    if (user) {
+      dispatch(auth(user));
+    }
     setUser(JSON.parse(localStorage.getItem("profile")!));
   }, [location]);
 

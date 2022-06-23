@@ -11,8 +11,8 @@ const ActorCard: React.FC<ActorCardProps> = ({ actor }) => {
   return (
     <div className="actor-card">
       <Image
-        errorImg="https://image.shutterstock.com/image-vector/no-image-available-vector-illustration-260nw-744886198.jpg"
-        placeholderImg="https://via.placeholder.com/400x200.png?text=This+Will+Be+Shown+Before+Load"
+        errorImg="/no-image-available.jpg"
+        placeholderImg="/placeholderImg.jpg"
         src={`https://image.tmdb.org/t/p/w300/${profile_path}`}
         alt={`Image of ${original_name}`}
       />

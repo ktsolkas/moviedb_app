@@ -29,8 +29,8 @@ const MovieCard: React.FC<MovieCardProps> = ({
     <div className="movie-card" onClick={onClick}>
       <div className="image-container">
         <Image
-          errorImg="https://image.shutterstock.com/image-vector/no-image-available-vector-illustration-260nw-744886198.jpg"
-          placeholderImg="https://via.placeholder.com/400x200.png?text=This+Will+Be+Shown+Before+Load"
+          errorImg="/no-image-available.jpg"
+          placeholderImg="/placeholderImg.jpg"
           src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
           alt={`${title} movie poster`}
         />
