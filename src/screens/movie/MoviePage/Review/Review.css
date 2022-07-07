@@ -1,0 +1,47 @@
+.review {
+  width: 80%;
+  margin: 0 auto;
+  border-left: 4px solid #003300;
+  position: relative;
+  margin-bottom: 20px;
+  background-color: #f7f7f7;
+  border-radius: 4px;
+}
+
+.review h4 {
+  margin: 20px;
+  text-decoration: underline;
+  padding-top: 5px;
+  font-size: 18px;
+  font-weight: unset;
+}
+
+.review .body {
+  text-align: left;
+  margin: 5px 5px 20px 5px;
+}
+
+.review .rating {
+  top: 5px;
+  left: 5px;
+}
+
+.review span {
+  text-align: right;
+  display: block;
+  font-size: 14px;
+  color: #5c5c5c;
+  margin-right: 10px;
+  padding-bottom: 10px;
+}
+
+.button-group {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.button-group button {
+  margin-left: 5px;
+  cursor: pointer;
+}

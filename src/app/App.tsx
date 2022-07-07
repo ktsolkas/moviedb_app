@@ -1,44 +1,70 @@
-import "./App.css";
-import { Outlet } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
 
-import Header from "../components/Header";
+import { CardList } from "../screens/components/CardList/CardList";
+import ProtectedRoute from "../screens/components/ProtectedRoute/ProtectedRoute";
+import HomePage from "../screens/home/HomePage/HomePage";
+import MoviePage from "../screens/movie/MoviePage/MoviePage";
+import SearchPage from "../screens/search/SearchPage";
+import SignInPage from "../screens/signIn/SignInPage";
+import WatchlistPage from "../screens/watchlist/WatchlistPage";
+import Layout from "../screens/components/Layout/Layout";
+import { useAppDispatch, useAppSelector } from "./hooks";
 import {
-  useCreateWatchlistMutation,
+  selectWatchlist,
   useGetGenresQuery,
   useGetWatchlistQuery,
-} from "./services/api";
-import { useEffect } from "react";
-// import { useEffect, useState } from "react";
-
-//rafce
+} from "./store/services/api";
+import { selectUser } from "./store/authSlice";
+import { auth } from "../app/store/authSlice";
+import { updateWatchlist } from "./store/watchlistSlice";
+import { categories } from "../common/types/Category";
 
 const App: React.FC = () => {
+  const dispatch = useAppDispatch();
   useGetGenresQuery(null);
-  const { data, isLoading, isSuccess } = useGetWatchlistQuery(null);
-  console.log("asd", data, isLoading, isSuccess);
-  // const [data, setData] = useState(null);
+  useGetWatchlistQuery(null);
+  const watchlist = useAppSelector(selectWatchlist);
+  const user = useAppSelector(selectUser);
 
-  // useEffect(() => {
-  //   fetch("http://localhost:3001/api")
-  //     .then((res) => res.json())
-  //     .then((data) => setData(data.message));
-  // }, []);
-
-  // console.log("ok man", data);
-  // const watchlist = useGetWatchlistQuery(null);
-  // console.log("ola pipa", watchlist);
-  // const [peons, result] = useCreateWatchlistMutation();
-
-  // useEffect(() => {
-  //   peons({ data: "asd" });
-  //   console.log("hjdfsdfkjskjdfskj", result);
-  // }, []);
+  useEffect(() => {
+    const profile = JSON.parse("" + localStorage.getItem("profile"));
+    if (profile) {
+      dispatch(auth(profile));
+      dispatch(updateWatchlist(watchlist || []));
+    }
+  }, [watchlist, dispatch]);
 
   return (
-    <div className="app-container">
-      <Header />
-      <Outlet />
-    </div>
+    <>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<HomePage />}>
+            <Route index element={<CardList category={"popular"} />} />
+            {categories.map((value) => {
+              return (
+                <Route
+                  key={value}
+                  path={value}
+                  element={<CardList category={value} />}
+                />
+              );
+            })}
+          </Route>
+          <Route path="search/:searchTerm" element={<SearchPage />} />
+          <Route path="movie/:movieId" element={<MoviePage />} />
+          <Route path="signin" element={<SignInPage />} />
+          <Route
+            path="/watchlist"
+            element={
+              <ProtectedRoute user={user?.profileData!}>
+                <WatchlistPage />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
+      </Routes>
+    </>
   );
 };
 

@@ -1,9 +1,16 @@
 body {
   margin: 0 auto;
   width: 100%;
-  /* background-color: black; */
-  background-image: url(../public/film-strip-background-with-clapper-board_1017-33456.jpg);
+  background: rgb(42, 42, 179);
+  background: linear-gradient(
+    0deg,
+    rgba(42, 42, 179, 1) 0%,
+    rgba(5, 5, 64, 1) 70%
+  );
   background-attachment: fixed;
-  background-size: cover;
   font-family: sans-serif;
+}
+
+a {
+  text-decoration: none;
 }

@@ -1,0 +1,32 @@
+.details {
+  position: relative;
+  height: 90px;
+  padding-top: 5px;
+}
+
+.details p {
+  position: absolute;
+  margin: 0 5px;
+  bottom: 0;
+  font-size: 11px;
+}
+
+.details h3 {
+  margin: 0px 0px 0px 5px;
+  font-size: 14px;
+  width: calc(100% - 40px);
+}
+
+@media screen and (max-width: 499px) {
+  .details h3 {
+    font-size: 11px;
+  }
+
+  .details span {
+    font-size: 9px;
+  }
+
+  .details h3 {
+    width: calc(100% - 28px);
+  }
+}

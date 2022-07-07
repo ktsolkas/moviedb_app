@@ -1,0 +1,83 @@
+header {
+  width: 80%;
+  height: 120px;
+  margin: 10px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-app-title {
+  color: #fff049;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+i {
+  padding-left: 5px;
+}
+
+.nav-options {
+  width: 370px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.sign-in {
+  background-color: #fd2525;
+  border-radius: 4px;
+  border: 1px solid #ffffff;
+}
+
+.nav-options a,
+.nav-options button {
+  color: #ffffff;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.nav-options a:hover {
+  text-decoration: underline;
+}
+
+.nav-options .sign-in:hover,
+.nav-options button:hover {
+  background-color: #bc1212;
+}
+
+.user-info {
+  width: 80%;
+  margin: -50px auto 10px auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
+  color: #ffffff;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+@media screen and (max-width: 699px) {
+  .header-app-title {
+    display: none;
+  }
+
+  header {
+    justify-content: center;
+  }
+
+  .nav-options a,
+  .nav-options button {
+    font-size: 12px;
+  }
+}

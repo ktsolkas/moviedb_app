@@ -1,0 +1,30 @@
+.movie-card {
+  background-color: #336699;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #224466;
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+  --width: calc(100% - 60px);
+}
+
+.movie-card:hover {
+  background-color: #224466;
+  border-color: #112233;
+}
+
+.movie-card:hover img {
+  transform: scalex(1.1);
+  transition-property: transform;
+  transition-duration: 4.5s;
+}
+
+.image-container {
+  height: var(--width);
+  overflow: hidden;
+}
+
+img {
+  width: 100%;
+}

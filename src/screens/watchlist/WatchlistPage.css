@@ -1,0 +1,32 @@
+.watchlist {
+  width: 80%;
+  margin: 0 auto;
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.watchlist h2 {
+  grid-column-start: 1;
+  grid-column-end: 5;
+  text-align: center;
+  color: #fff049;
+}
+
+.empty-watchlist {
+  color: #dbdbdb;
+  grid-column-start: 1;
+  grid-column-end: 5;
+}
+
+@media screen and (max-width: 899px) {
+  .watchlist {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .watchlist {
+    grid-template-columns: 1fr 1fr;
+  }
+}

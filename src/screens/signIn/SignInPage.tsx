@@ -1,14 +1,27 @@
-import { useEffect, useState } from "react";
 import "./SignInPage.css";
-import Input from "./Input";
-import { GoogleLogin } from "@react-oauth/google";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
+
+import Input from "../components/Input/Input";
 import { useAppDispatch } from "../../app/hooks";
-// import { auth, signin, signup } from "../../features/auth/authSlice";
-import { auth } from "../../features/auth/authSlice";
-import { useNavigate } from "react-router-dom";
-import { useSignInMutation, useSignUpMutation } from "../../app/services/api";
-// import { gapi } from "gapi-script";
+import { auth } from "../../app/store/authSlice";
+import {
+  serverApi,
+  useSignInMutation,
+  useSignUpMutation,
+} from "../../app/store/services/api";
+import { ProfileData } from "../../common/types/ProfileData";
+
+interface LocationState {
+  from?: string;
+}
+
+interface AuthResponse {
+  result: Partial<ProfileData>;
+  token: string;
+}
 
 const initialState = {
   firstName: "",
@@ -19,27 +32,39 @@ const initialState = {
 };
 
 const SignInPage: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const locationState = location.state as LocationState;
+
   const [loginMode, setLoginMode] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState(initialState);
-  const signIn = useSignInMutation();
-  const signUp = useSignUpMutation();
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+
+  const [signIn] = useSignInMutation();
+  const [signUp] = useSignUpMutation();
 
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      const token = tokenResponse?.access_token;
-      // console.log("asd", tokenResponse);
-      // console.log("ala", token);
-      const res = await fetch(
-        "https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + token
-      );
-      const profileData = await res.json();
-      console.log(profileData);
       try {
-        dispatch(auth({ profileData, token }));
-        navigate("/");
+        const token = tokenResponse?.access_token;
+        const res = await fetch(
+          "https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + token
+        );
+        const profileData = await res.json();
+        const tokeninfoRes = await fetch(
+          "https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=" + token
+        );
+
+        const expires_in = await tokeninfoRes
+          .json()
+          .then((value) => value.expires_in);
+        var tokenExpirationDate: Date = new Date();
+        tokenExpirationDate.setSeconds(
+          new Date().getSeconds() + parseInt(expires_in)
+        );
+
+        tryAfterLogin(profileData, token, tokenExpirationDate.toJSON());
       } catch (error) {
         console.log(error);
       }
@@ -47,30 +72,25 @@ const SignInPage: React.FC = () => {
     onError: (error) => console.log("Google log in was unsuccessful. ", error),
   });
 
-  const handleShowPassword = () => setShowPassword((prev) => !prev);
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // console.log(formData);
 
     if (loginMode) {
-      // dispatch(signin({ formData, navigate }));
-      const [attempt] = signIn;
       try {
-        const res = await attempt({ ...formData }).unwrap();
-        console.log("RESULT", res);
-        dispatch(auth({ profileData: res.result, token: res.token }));
-        navigate("/");
+        const res: AuthResponse = await signIn({ ...formData }).unwrap();
+        const profileData = res.result;
+        const token = res.token;
+
+        const decodedToken: any = jwt_decode(token);
+        const tokenExpirationDate = new Date(decodedToken.exp * 1000).toJSON();
+
+        tryAfterLogin(profileData, token, tokenExpirationDate);
       } catch (error) {
         console.log(error);
       }
     } else {
-      // dispatch(signup({ formData, navigate }));
-      const [attempt] = signUp;
       try {
-        const res = await attempt({ ...formData }).unwrap();
-        // await attempt({ formData, navigate });
-        console.log("RESULT", res);
+        const res: AuthResponse = await signUp({ ...formData }).unwrap();
         dispatch(auth({ profileData: res.result, token: res.token }));
         navigate("/");
       } catch (error) {
@@ -91,29 +111,25 @@ const SignInPage: React.FC = () => {
   const switchPasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
-  // const responseGoogle = (response: any) => {
-  //   console.log(response);
-  // };
 
-  // const googleSuccess = (response: any) => {
-  //   console.log(response);
-  // };
-
-  // const googleFailure = (error: any) => {
-  //   console.log("Failure", error.details);
-  // };
-
-  // useEffect(() => {
-  //   function start() {
-  //     gapi.client.init({
-  //       clientId:
-  //         "79054974389-d331kq17ikhppgu7777st4lsqnis1ksr.apps.googleusercontent.com",
-  //       scope: "email",
-  //     });
-  //   }
-
-  //   gapi.load("client:auth2", start);
-  // }, []);
+  const tryAfterLogin = (
+    profileData: Partial<ProfileData>,
+    token: string,
+    tokenExpirationDate: string
+  ) => {
+    dispatch(auth({ profileData, token, tokenExpirationDate }));
+    dispatch(
+      serverApi.endpoints.getWatchlist.initiate(null, {
+        subscribe: false,
+        forceRefetch: true,
+      })
+    );
+    if (locationState && locationState.from) {
+      navigate(locationState.from);
+    } else {
+      navigate("/");
+    }
+  };
 
   return (
     <main className="sign-in-form">
@@ -147,7 +163,6 @@ const SignInPage: React.FC = () => {
           label="Password"
           handleChange={handleChange}
           type={showPassword ? "text" : "password"}
-          handleShowPassword={handleShowPassword}
         />
         {formData.password && (
           <i
@@ -169,14 +184,6 @@ const SignInPage: React.FC = () => {
         <button className="btn-google" type="button" onClick={() => login()}>
           Sign in with Google
         </button>
-        {/* <GoogleLogin
-          clientId="79054974389-d331kq17ikhppgu7777st4lsqnis1ksr.apps.googleusercontent.com"
-          buttonText="Google Sign In"
-          onSuccess={googleSuccess}
-          onFailure={googleFailure}
-          cookiePolicy={"single_host_origin"}
-          // uxMode="redirect"
-        /> */}
         <button className="btn-switch" type="button" onClick={switchMode}>
           {!loginMode
             ? "Already have an account? Sign In"
