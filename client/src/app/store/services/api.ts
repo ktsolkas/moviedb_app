@@ -101,7 +101,7 @@ export const moviedbApi = createApi({
 export const serverApi = createApi({
   reducerPath: 'api',
   baseQuery: axiosBaseQuery({
-    baseUrl: 'http://localhost:10000',
+    baseUrl: 'https://movieapp-kt.onrender.com',
   }),
   endpoints: (builder) => ({
     signIn: builder.mutation({
