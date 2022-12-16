@@ -12,7 +12,7 @@ import reviewRoutes from './routes/review.js';
 
 const numCPUs = os.cpus().length;
 const isDev = process.env.NODE_ENV !== 'production';
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 10000;
 
 if (!isDev && cluster.isPrimary) {
   console.error(`Node cluster master ${process.pid} is running`);
