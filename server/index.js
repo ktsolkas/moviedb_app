@@ -42,8 +42,7 @@ if (!isDev && cluster.isPrimary) {
   app.use('/user', userRoutes);
   app.use('/review', reviewRoutes);
 
-  const CONNECTION_URL =
-    'mongodb+srv://usernamekt:usernamekt123@cluster0.vpi3s.mongodb.net/?retryWrites=true&w=majority';
+  const CONNECTION_URL = process.env.MONGODB;
 
   mongoose
     .connect(CONNECTION_URL)

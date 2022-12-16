@@ -15,7 +15,7 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <GoogleOAuthProvider clientId="79054974389-d331kq17ikhppgu7777st4lsqnis1ksr.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId={process.env.GOOGLE_ID!}>
         <BrowserRouter>
           <App />
         </BrowserRouter>
