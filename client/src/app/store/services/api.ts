@@ -21,7 +21,7 @@ const axiosBaseQuery =
   async ({ url, method, data, params }) => {
     const authorization =
       baseUrl === 'https://api.themoviedb.org/3'
-        ? `Bearer ${process.env.MOVIEDB_API}`
+        ? `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MDUwZGYwYjY3YjUyYmY0MjZmYWM3ZjI2ZWY0ZjIwNSIsInN1YiI6IjYyYTVlM2QyNTM4NjZlMGRlMGYzYTMyMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.mmr3TYlySq6LTS3OFrE0UFTxPZECpGRIwWhIpWTF9fA`
         : `Bearer ${
             localStorage.getItem('profile')
               ? JSON.parse(localStorage.getItem('profile')!).token
